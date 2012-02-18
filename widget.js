@@ -64,14 +64,16 @@
 		}
 	}
 	form.onsubmit = function() {
+		var label = form.getElementsByTagName('label');
+		var podurl = "https://" + label[0].childNodes[1].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
+		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
 		var iframe = document.createElement( 'iframe' );
 		iframe.setAttribute( 'name', 'iframe' );
 		iframe.setAttribute( 'frameborder', '0' );
 		iframe.setAttribute( 'allowTransparency', 'true' );
 		iframe.setAttribute( 'width', '700' );
 		iframe.setAttribute( 'height', '490' );
-		iframe.setAttribute( 'src', 'https://diasp.org/bookmarklet' );
-		//"https://" + pod + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;"
+		iframe.setAttribute( 'src', podurl );
 		form.appendChild( iframe );
 		return false;
 	}
