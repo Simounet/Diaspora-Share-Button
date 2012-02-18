@@ -64,6 +64,10 @@
 		}
 	}
 	form.onsubmit = function() {
+		var iframes = form.getElementsByTagName('iframe');
+		if ( iframes.length != 0 ) {
+			iframes[0].parentNode.removeChild( iframes[0] );
+		}
 		var label = form.getElementsByTagName('label');
 		var podurl = "https://" + label[0].childNodes[1].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
 		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
