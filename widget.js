@@ -1,8 +1,10 @@
 (function() {
+    // append global div and set as widget
 	document.write( '<div class="x-widget"></div>' );
 	var widgets = document.getElementsByTagName( 'div' );
 	var widget = widgets[ widgets.length - 1 ];
 	
+    // check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
 	var eraser_css_href = 'eraser.css';
@@ -20,7 +22,7 @@
 		document.head.appendChild( link );
 	}
 	
-
+    // <a> element with the Diaspora*'s img button
 	var target = document.createElement( 'a' );
 	target.setAttribute( 'style', 'display:block' );
 	target.setAttribute( 'title', 'Share this at Diaspora*' );
@@ -31,11 +33,14 @@
 	target.appendChild( img );
 	widget.appendChild( target );
 
+    // form
 	var form = document.createElement( 'form' );
 	form.setAttribute( 'method', 'get' );
 	widget.appendChild( form );
 
+    // handle onclick on the img to show input text
 	target.onclick = function() {
+        // label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if ( labels.length == 0 ) {
 			var label = document.createElement( 'label' );
@@ -63,6 +68,8 @@
 			labels[0].parentNode.removeChild( labels[0] );
 		}
 	}
+
+    // handle form validation and iframe
 	form.onsubmit = function() {
 		var iframes = form.getElementsByTagName('iframe');
 		if ( iframes.length != 0 ) {
@@ -73,10 +80,6 @@
 		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
 		var iframe = document.createElement( 'iframe' );
 		iframe.setAttribute( 'name', 'iframe' );
-		//iframe.setAttribute( 'frameborder', '0' );
-		//iframe.setAttribute( 'allowTransparency', 'true' );
-		//iframe.setAttribute( 'width', '700' );
-		//iframe.setAttribute( 'height', '490' );
 		iframe.setAttribute( 'src', podurl );
 		form.appendChild( iframe );
 		return false;
