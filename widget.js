@@ -5,7 +5,7 @@
 	
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = 'http://zilliox.me/share/eraser.css';
+	var eraser_css_href = 'eraser.css';
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
@@ -73,10 +73,10 @@
 		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
 		var iframe = document.createElement( 'iframe' );
 		iframe.setAttribute( 'name', 'iframe' );
-		iframe.setAttribute( 'frameborder', '0' );
-		iframe.setAttribute( 'allowTransparency', 'true' );
-		iframe.setAttribute( 'width', '700' );
-		iframe.setAttribute( 'height', '490' );
+		//iframe.setAttribute( 'frameborder', '0' );
+		//iframe.setAttribute( 'allowTransparency', 'true' );
+		//iframe.setAttribute( 'width', '700' );
+		//iframe.setAttribute( 'height', '490' );
 		iframe.setAttribute( 'src', podurl );
 		form.appendChild( iframe );
 		return false;

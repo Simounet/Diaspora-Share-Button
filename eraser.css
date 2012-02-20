@@ -358,3 +358,15 @@
 .x-widget [dir="rtl"] {
     direction: rtl !important;
 }
+
+/*
+ * Custom properties
+ */
+.x-widget a :hover {
+    cursor: crosshair !important;
+}
+.x-widget iframe {
+    width: 700px !important;
+    height: 490px !important;
+    border: 0;
+}
