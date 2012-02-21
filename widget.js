@@ -25,6 +25,13 @@
     // <a> element with the Diaspora*'s img button
 	var target = document.createElement( 'a' );
 	target.setAttribute( 'style', 'display:block' );
+target.onmouseover=function(){
+    this.setAttribute( 'style', 'cursor: crosshair !important' );
+}
+
+target.onmouseout=function(){
+    this.setAttribute( 'style', 'cursor: default !important' );
+}
 	target.setAttribute( 'title', 'Share this at Diaspora*' );
 
 	var img = document.createElement( 'img' );
@@ -36,15 +43,20 @@
     // form
 	var form = document.createElement( 'form' );
 	form.setAttribute( 'method', 'get' );
+	form.setAttribute( 'class', 'parentDisable' );
+	form.setAttribute( 'id', 'test' );
 	widget.appendChild( form );
 
     // handle onclick on the img to show input text
 	target.onclick = function() {
+        document.getElementById("test").setAttribute('style', 'display:block !important');
+
         // label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if ( labels.length == 0 ) {
 			var label = document.createElement( 'label' );
 			label.setAttribute( 'for', 'podname' );
+			label.setAttribute( 'class', 'popin' );
 			label.innerHTML = 'Pod Name: http://';
 			form.appendChild( label );
 			var podname = document.createElement( 'input' );

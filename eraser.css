@@ -362,11 +362,36 @@
 /*
  * Custom properties
  */
-.x-widget a :hover {
-    cursor: crosshair !important;
-}
 .x-widget iframe {
     width: 700px !important;
     height: 490px !important;
     border: 0;
+}
+.x-widget .parentDisable {
+	z-index:999 !important;
+	width:100% !important;
+	height:100% !important;
+	display:none !important;
+	position:absolute !important;
+	top:0 !important;
+	left:0 !important;
+	/* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(0, 0, 0) !important;
+	/* RGBa with 0.6 opacity */
+	background: rgba(0, 0, 0, 0.6) !important;
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+}
+.x-widget .popin {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    display: block;
+    height: 500px !important;
+    left: 50% !important;
+    margin: -250px auto 0 -250px !important;
+    position: absolute !important;
+    top: 50% !important;
+    width: 500px !important;
 }
