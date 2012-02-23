@@ -25,18 +25,18 @@
     // <a> element with the Diaspora*'s img button
 	var target = document.createElement( 'a' );
 	target.setAttribute( 'style', 'display:block' );
-target.onmouseover=function(){
-    this.setAttribute( 'style', 'cursor: crosshair !important' );
-}
-
-target.onmouseout=function(){
-    this.setAttribute( 'style', 'cursor: default !important' );
-}
 	target.setAttribute( 'title', 'Share this at Diaspora*' );
 
 	var img = document.createElement( 'img' );
 	img.setAttribute( 'src', 'https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png' );
 	img.setAttribute( 'alt', 'Share this at Diaspora*' );
+    img.onmouseover=function(){
+        this.setAttribute( 'style', 'cursor: pointer !important' );
+    }
+
+    img.onmouseout=function(){
+        this.setAttribute( 'style', 'cursor: default !important' );
+    }
 	target.appendChild( img );
 	widget.appendChild( target );
 
