@@ -40,29 +40,47 @@
 	target.appendChild( img );
 	widget.appendChild( target );
 
+    // widget container
+    var container = document.createElement( 'div' );
+    // TODO: Supprimer la classe - mettre style en ligne
+    container.setAttribute( 'class', 'parentDisable' );
+    widget.appendChild( container )
+
     // form
 	var form = document.createElement( 'form' );
 	form.setAttribute( 'method', 'get' );
-	form.setAttribute( 'class', 'parentDisable' );
-	form.setAttribute( 'id', 'test' );
-	widget.appendChild( form );
+	form.setAttribute( 'class', 'popin' );
+	form.setAttribute( 'name', 'widgetform' );
+	container.appendChild( form );
 
     // handle onclick on the img to show input text
 	target.onclick = function() {
-        document.getElementById("test").setAttribute('style', 'display:block !important');
+        container.setAttribute('style', 'display:block !important');
 
         // label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if ( labels.length == 0 ) {
 			var label = document.createElement( 'label' );
 			label.setAttribute( 'for', 'podname' );
-			label.setAttribute( 'class', 'popin' );
 			label.innerHTML = 'Pod Name: http://';
 			form.appendChild( label );
 			var podname = document.createElement( 'input' );
 			podname.setAttribute( 'type', 'text' );
 			podname.setAttribute( 'name', 'podname' );
 			label.appendChild( podname );
+
+            // close button
+			var close = document.createElement( 'a' );
+			close.setAttribute( 'href', 'javascript:;' );
+			close.onclick = function() {
+                for ( var i=0; i<form.childNodes.length; i++ ) {
+                    form.removeChild( form.childNodes[i] );
+                }
+                container.setAttribute('style', 'display:none !important');
+            }
+            close.innerHTML = 'Close';
+			label.appendChild( close );
+
 			podname.select();
 			podname.onkeyup = function() {
 				var buttons = form.getElementsByTagName('button');
