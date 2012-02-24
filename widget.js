@@ -130,10 +130,13 @@
                 for (var i = 0; i < form.childNodes.length; i++) {
                     form.removeChild(form.childNodes[i]);
                 }
+                // fix remove all label childs at the same time
+                form.removeChild(close);
                 container.setAttribute('style', 'display:none !important');
             }
+            close.setAttribute('style', 'display:block !important');
             close.innerHTML = 'Close';
-            label.appendChild(close);
+            form.appendChild(close);
 
             podname.select();
             podname.onkeyup = function () {
@@ -145,11 +148,11 @@
                     button.innerHTML = 'Submit';
                     label.appendChild(button);
                 } else if (podname.textLength == 0) {
-                    buttons[0].parentNode.removeChild(buttons[0]);
+                    label.removeChild(buttons[0]);
                 }
             }
         } else {
-            labels[0].parentNode.removeChild(labels[0]);
+            form.removeChild(labels[0]);
         }
 	}
 
