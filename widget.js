@@ -22,13 +22,7 @@
 		document.head.appendChild( link );
 	}
 	
-    // <a> element with the Diaspora*'s img button
-	var target = document.createElement( 'a' );
-	target.setAttribute( 'style', 'display:block' );
-	target.setAttribute( 'title', 'Share this at Diaspora*' );
-
     // img button
-	var img = document.createElement( 'img' );
 	var img_src = 'data:image/png;base64,' +
 		'iVBORw0KGgoAAAANSUhEUgAAADIAAAA8CAYAAAAkNenBAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdB' +
 		'TUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAAM+UlE' +
@@ -88,16 +82,17 @@
 		'5oNKmkJgyTV1WgdY37ate1GSEYh96xY31hQwYcIscHKGlWYg/YQAQAAxrl0x50NVVRs/aHRxKDZRPn36' +
 		'zFBUlPERIICY/kEnLIcyAPUcAQKIBdgM/gPqE3z79n8Itn5B42HfQA3ePwABxPjyyaX2TZt2ZX3+/AXk' +
 		'kf9DyyP/GYGdQhYvb5fFAAEGANPsvlfQGVlZAAAAAElFTkSuQmCC';
-	img.setAttribute( 'src', img_src );
-	img.setAttribute( 'alt', 'Share this at Diaspora*' );
-    img.onmouseover=function(){
-        this.setAttribute( 'style', 'cursor: pointer !important' );
+    // <a> element with the Diaspora*'s img button
+	var target = document.createElement( 'a' );
+    var targetDefaultStyle = 'display:block !important; width: 50px !important;height: 60px !important;background:url(https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png) no-repeat !important;';
+	target.setAttribute( 'style', targetDefaultStyle );
+	target.setAttribute( 'title', 'Share this at Diaspora*' );
+    target.onmouseover=function(){
+        this.setAttribute( 'style', targetDefaultStyle + 'cursor: pointer !important;' );
     }
-
-    img.onmouseout=function(){
-        this.setAttribute( 'style', 'cursor: default !important' );
+    target.onmouseout=function(){
+        this.setAttribute( 'style', targetDefaultStyle + 'cursor: default !important;' );
     }
-	target.appendChild( img );
 	widget.appendChild( target );
 
     // widget container
@@ -117,33 +112,45 @@
         container.setAttribute('style', 'z-index:999 !important;width:100% !important;height:100% !important;display:block !important;position:absolute !important;top:0 !important;left:0 !important;background: rgb(0, 0, 0) !important;background: rgba(0, 0, 0, 0.6) !important;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";');
 
         // label with input and submit button
-		var labels = form.getElementsByTagName('label');
-		if ( labels.length == 0 ) {
-			var label = document.createElement( 'label' );
-			label.setAttribute( 'for', 'podname' );
-			label.setAttribute( 'class', 'popin' );
-			label.innerHTML = 'Pod Name: http://';
-			form.appendChild( label );
-			var podname = document.createElement( 'input' );
-			podname.setAttribute( 'type', 'text' );
-			podname.setAttribute( 'name', 'podname' );
-			label.appendChild( podname );
-			podname.select();
-			podname.onkeyup = function() {
-				var buttons = form.getElementsByTagName('button');
-				if ( podname.textLength !=0 && buttons.length == 0 ) {
-					var button = document.createElement( 'button' );
-					button.setAttribute( 'type', 'submit' );
-					button.setAttribute( 'name', 'submit' );
-					button.innerHTML = 'Submit';
-					label.appendChild( button );
-				} else if ( podname.textLength == 0 ) {
-					buttons[0].parentNode.removeChild( buttons[0] );
-				}
-			}
-		} else {
-			labels[0].parentNode.removeChild( labels[0] );
-		}
+        var labels = form.getElementsByTagName('label');
+        if (labels.length == 0) {
+            var label = document.createElement('label');
+            label.setAttribute('for', 'podname');
+            label.innerHTML = 'Pod Name: http://';
+            form.appendChild(label);
+            var podname = document.createElement('input');
+            podname.setAttribute('type', 'text');
+            podname.setAttribute('name', 'podname');
+            label.appendChild(podname);
+
+            // close button
+            var close = document.createElement('a');
+            close.setAttribute('href', 'javascript:;');
+            close.onclick = function () {
+                for (var i = 0; i < form.childNodes.length; i++) {
+                    form.removeChild(form.childNodes[i]);
+                }
+                container.setAttribute('style', 'display:none !important');
+            }
+            close.innerHTML = 'Close';
+            label.appendChild(close);
+
+            podname.select();
+            podname.onkeyup = function () {
+                var buttons = form.getElementsByTagName('button');
+                if (podname.textLength != 0 && buttons.length == 0) {
+                    var button = document.createElement('button');
+                    button.setAttribute('type', 'submit');
+                    button.setAttribute('name', 'submit');
+                    button.innerHTML = 'Submit';
+                    label.appendChild(button);
+                } else if (podname.textLength == 0) {
+                    buttons[0].parentNode.removeChild(buttons[0]);
+                }
+            }
+        } else {
+            labels[0].parentNode.removeChild(labels[0]);
+        }
 	}
 
     // handle form validation and iframe
