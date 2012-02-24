@@ -17,3 +17,6 @@ This repository contains a project for a Diaspora's sharing button we can use wi
 
 * **0.1**<br>
     Initial Release
+
+* **0.3**<br>
+    Jqueryless version
