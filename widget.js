@@ -40,16 +40,21 @@
 	target.appendChild( img );
 	widget.appendChild( target );
 
+    // widget container
+    var container = document.createElement( 'div' );
+    container.setAttribute( 'style', 'display:none !important;' );
+    widget.appendChild( container )
+
     // form
 	var form = document.createElement( 'form' );
 	form.setAttribute( 'method', 'get' );
-	form.setAttribute( 'class', 'parentDisable' );
-	form.setAttribute( 'id', 'test' );
-	widget.appendChild( form );
+    form.setAttribute( 'style', 'background-color: #FFFFFF !important;color: #000000 !important;display: block;height: 500px !important;left: 50% !important;margin: -250px auto 0 -250px !important;position: absolute !important;top: 50% !important;width: 500px !important;' );
+	form.setAttribute( 'name', 'widgetform' );
+	container.appendChild( form );
 
     // handle onclick on the img to show input text
 	target.onclick = function() {
-        document.getElementById("test").setAttribute('style', 'display:block !important');
+        container.setAttribute('style', 'z-index:999 !important;width:100% !important;height:100% !important;display:block !important;position:absolute !important;top:0 !important;left:0 !important;background: rgb(0, 0, 0) !important;background: rgba(0, 0, 0, 0.6) !important;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";');
 
         // label with input and submit button
 		var labels = form.getElementsByTagName('label');
@@ -93,6 +98,7 @@
 		var iframe = document.createElement( 'iframe' );
 		iframe.setAttribute( 'name', 'iframe' );
 		iframe.setAttribute( 'src', podurl );
+        iframe.setAttribute('style', 'width: 700px !important;height: 490px !important;border: 0;');
 		form.appendChild( iframe );
 		return false;
 	}
