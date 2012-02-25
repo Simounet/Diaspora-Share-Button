@@ -103,7 +103,7 @@
     // form
 	var form = document.createElement( 'form' );
 	form.setAttribute( 'method', 'get' );
-    form.setAttribute( 'style', 'background-color: #FFFFFF !important;color: #000000 !important;display: block;height: 500px !important;left: 50% !important;margin: -250px auto 0 -250px !important;position: absolute !important;top: 50% !important;width: 500px !important;' );
+    form.setAttribute( 'style', 'background-color: #FFFFFF !important;color: #000000 !important;display: block;height: 500px !important;left: 50% !important;margin: -450px auto 0 -350px !important;position: absolute !important;top: 50% !important;width: 700px !important;' );
 	form.setAttribute( 'name', 'widgetform' );
 	container.appendChild( form );
 
@@ -168,7 +168,7 @@
 		var iframe = document.createElement( 'iframe' );
 		iframe.setAttribute( 'name', 'iframe' );
 		iframe.setAttribute( 'src', podurl );
-        iframe.setAttribute('style', 'width: 700px !important;height: 490px !important;border: 0;');
+        iframe.setAttribute('style', 'width: 700px !important;height: 600px !important;border: 0; overflow: hidden !important;');
 		form.appendChild( iframe );
 		return false;
 	}
