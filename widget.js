@@ -110,31 +110,35 @@
           ]);
     widget.appendChild( target );
 
+    // widget parentContainer
+    var parentContainer = createElement( '<div></div>' );
+    addImportantStyle( parentContainer, [
+            'display:none',
+          ]);
+    widget.appendChild( parentContainer );
+
     // widget container
     var container = createElement( '<div></div>' );
     addImportantStyle( container, [
-            'display:none',
-          ]);
-    widget.appendChild( container );
-
-    // form
-    var form = createElement( '<form method="get" name="widgetform"></form>' );
-    addImportantStyle( form, [
             'background-color: #FFFFFF',
             'color: #000000',
             'display: block',
-            'height: 500px',
+            'height: 70px',
             'left: 50%',
             'margin: -450px auto 0 -350px',
             'position: absolute',
             'top: 50%',
             'width: 700px',
           ]);
+    parentContainer.appendChild( container );
+
+    // form
+    var form = createElement( '<form method="get" name="widgetform"></form>' );
     container.appendChild( form );
 
     // handle onclick on the img to show input text
 	target.onclick = function() {
-        addImportantStyle( container, [
+        addImportantStyle( parentContainer, [
                 'z-index:999',
                 'width:100%',
                 'height:100%',
@@ -152,6 +156,11 @@
         var labels = form.getElementsByTagName('label');
         if (labels.length == 0) {
             var label = createElement( '<label for="podname">Pod Name: http://</label>' );
+            addImportantStyle( label, [
+                    'display: block',
+                    'text-align: center',
+                    'margin: 5px',
+                  ]);
             form.appendChild( label );
 
             var podname = createElement( '<input type="text" name="podname"></input>' );
@@ -165,26 +174,33 @@
                 }
                 // fix remove all label childs at the same time
                 form.removeChild(close);
-                addImportantStyle( container, [
+                addImportantStyle( parentContainer, [
                         'display:none',
                       ]);
             }
             close.onclick = to_close;
-            container.onclick = to_close;
-            form.onclick = function(event) { event.stopPropagation(); }
+            parentContainer.onclick = to_close;
+            container.onclick = function(event) { event.stopPropagation(); }
             addImportantStyle( close, [
                     'display:block',
+                    'position: absolute',
+                    'top: 0',
+                    'right: 0',
                   ]);
             form.appendChild( close );
 
             podname.select();
             podname.onkeyup = function () {
-                var buttons = form.getElementsByTagName('button');
+                var buttons = container.getElementsByTagName('button');
                 if ( podname.value.length != 0 && buttons.length == 0 ) {
                     var button = createElement( '<button name="submit" type="submit">Submit</button>' );
-                    label.appendChild( button );
+                    addImportantStyle( button, [
+                            'display:block',
+                            'margin: 0 auto',
+                          ]);
+                    form.appendChild( button );
                 } else if ( podname.value.length == 0 ) {
-                    label.removeChild(buttons[0]);
+                    form.removeChild(buttons[0]);
                 }
             }
         } else {
