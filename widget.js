@@ -1,6 +1,27 @@
 (function() {
+    // functions tools by @tzilliox : https://gist.github.com/1868872
+    function createElement( str ) {
+        var elem = document.createElement('div');
+        elem.innerHTML = str;
+        if ( elem.childNodes.length > 0 ) {
+            return elem.childNodes[0];
+        }
+        return elem;
+    }
+    function addImportantStyle( el, styles ) {
+        var style = '';
+        for ( var i=0; i<styles.length; i++ ){
+            if ( styles[i][ styles[i].length-1 ] == ';' ) {
+                styles[i] = styles[i].substr( 0, styles[i].length-1 );
+            }
+            style += styles[i] + ' !important;';
+        }
+        el.setAttribute( 'style', style );
+    }
+
     // append global div and set as widget
-	document.write( '<div class="x-widget"></div>' );
+    var div = createElement( '<div class="x-widget"></div>' );
+    document.body.appendChild( div );
 	var widgets = document.getElementsByTagName( 'div' );
 	var widget = widgets[ widgets.length - 1 ];
 	
@@ -15,11 +36,8 @@
 		}
 	}
 	if ( ! is_eraser_css ) {
-		var link = document.createElement( 'link' );
-		link.setAttribute( 'type', 'text/css' );
-		link.setAttribute( 'rel', 'stylesheet' );
-		link.setAttribute( 'href', eraser_css_href );
-		document.head.appendChild( link );
+        var link = createElement( '<link type="text/css" href="' + eraser_css_href + '" rel="stylesheet" />' );
+        document.head.appendChild( link );
 	}
 	
     // img button
@@ -83,71 +101,89 @@
 		'zFBUlPERIICY/kEnLIcyAPUcAQKIBdgM/gPqE3z79n8Itn5B42HfQA3ePwABxPjyyaX2TZt2ZX3+/AXk' +
 		'kf9DyyP/GYGdQhYvb5fFAAEGANPsvlfQGVlZAAAAAElFTkSuQmCC';
     // <a> element with the Diaspora*'s img button
-	var target = document.createElement( 'a' );
-    var targetDefaultStyle = 'display:block !important; width: 50px !important;height: 60px !important;background:url(https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png) no-repeat !important;';
-	target.setAttribute( 'style', targetDefaultStyle );
-	target.setAttribute( 'title', 'Share this at Diaspora*' );
-    target.onmouseover=function(){
-        this.setAttribute( 'style', targetDefaultStyle + 'cursor: pointer !important;' );
-    }
-    target.onmouseout=function(){
-        this.setAttribute( 'style', targetDefaultStyle + 'cursor: default !important;' );
-    }
-	widget.appendChild( target );
+    var target = createElement( '<a title="Share this at Diaspora*"></a>' );
+    addImportantStyle( target, [
+            'display:block',
+            'width: 50px',
+            'height: 60px',
+            'background:url(https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png) no-repeat',
+          ]);
+    widget.appendChild( target );
 
     // widget container
-    var container = document.createElement( 'div' );
-    container.setAttribute( 'style', 'display:none !important;' );
-    widget.appendChild( container )
+    var container = createElement( '<div></div>' );
+    addImportantStyle( container, [
+            'display:none',
+          ]);
+    widget.appendChild( container );
 
     // form
-	var form = document.createElement( 'form' );
-	form.setAttribute( 'method', 'get' );
-    form.setAttribute( 'style', 'background-color: #FFFFFF !important;color: #000000 !important;display: block;height: 500px !important;left: 50% !important;margin: -450px auto 0 -350px !important;position: absolute !important;top: 50% !important;width: 700px !important;' );
-	form.setAttribute( 'name', 'widgetform' );
-	container.appendChild( form );
+    var form = createElement( '<form method="get" name="widgetform"></form>' );
+    addImportantStyle( form, [
+            'background-color: #FFFFFF',
+            'color: #000000',
+            'display: block',
+            'height: 500px',
+            'left: 50%',
+            'margin: -450px auto 0 -350px',
+            'position: absolute',
+            'top: 50%',
+            'width: 700px',
+          ]);
+    container.appendChild( form );
 
     // handle onclick on the img to show input text
 	target.onclick = function() {
-        container.setAttribute('style', 'z-index:999 !important;width:100% !important;height:100% !important;display:block !important;position:absolute !important;top:0 !important;left:0 !important;background: rgb(0, 0, 0) !important;background: rgba(0, 0, 0, 0.6) !important;filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";');
+        addImportantStyle( container, [
+                'z-index:999',
+                'width:100%',
+                'height:100%',
+                'display:block',
+                'position:absolute',
+                'top:0',
+                'left:0',
+                'background: rgb(0, 0, 0)',
+                'background: rgba(0, 0, 0, 0.6)',
+                'filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)',
+                '-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)',
+              ]);
 
         // label with input and submit button
         var labels = form.getElementsByTagName('label');
         if (labels.length == 0) {
-            var label = document.createElement('label');
-            label.setAttribute('for', 'podname');
-            label.innerHTML = 'Pod Name: http://';
-            form.appendChild(label);
-            var podname = document.createElement('input');
-            podname.setAttribute('type', 'text');
-            podname.setAttribute('name', 'podname');
-            label.appendChild(podname);
+            var label = createElement( '<label for="podname">Pod Name: http://</label>' );
+            form.appendChild( label );
+
+            var podname = createElement( '<input type="text" name="podname"></input>' );
+            label.appendChild( podname );
 
             // close button
-            var close = document.createElement('a');
-            close.setAttribute('href', 'javascript:;');
-            close.onclick = function () {
+            var close = createElement( '<a href="javascript:;">Close</a>' );
+            var to_close = function () {
                 for (var i = 0; i < form.childNodes.length; i++) {
                     form.removeChild(form.childNodes[i]);
                 }
                 // fix remove all label childs at the same time
                 form.removeChild(close);
-                container.setAttribute('style', 'display:none !important');
+                addImportantStyle( container, [
+                        'display:none',
+                      ]);
             }
-            close.setAttribute('style', 'display:block !important');
-            close.innerHTML = 'Close';
-            form.appendChild(close);
+            close.onclick = to_close;
+            container.onclick = to_close;
+            form.onclick = function(event) { event.stopPropagation(); }
+            addImportantStyle( close, [
+                    'display:block',
+                  ]);
+            form.appendChild( close );
 
             podname.select();
             podname.onkeyup = function () {
                 var buttons = form.getElementsByTagName('button');
-                if (podname.textLength != 0 && buttons.length == 0) {
-                    var button = document.createElement('button');
-                    button.setAttribute('type', 'submit');
-                    button.setAttribute('name', 'submit');
-                    button.innerHTML = 'Submit';
-                    label.appendChild(button);
-                } else if (podname.textLength == 0) {
+                if ( podname.value.length != 0 && buttons.length == 0 ) {
+                    var button = createElement( '<button name="submit" type="submit">Submit</button>' );
+                    label.appendChild( button );
+                } else if ( podname.value.length == 0 ) {
                     label.removeChild(buttons[0]);
                 }
             }
@@ -165,11 +201,14 @@
 		var label = form.getElementsByTagName('label');
 		var podurl = "https://" + label[0].childNodes[1].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
 		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
-		var iframe = document.createElement( 'iframe' );
-		iframe.setAttribute( 'name', 'iframe' );
-		iframe.setAttribute( 'src', podurl );
-        iframe.setAttribute('style', 'width: 700px !important;height: 600px !important;border: 0; overflow: hidden !important;');
-		form.appendChild( iframe );
+        var iframe = createElement( '<iframe src="' + podurl + '"></iframe>' );
+        addImportantStyle( iframe, [
+                'width: 700px',
+                'height: 600px',
+                'border: 0',
+                'overflow: hidden',
+              ]);
+        form.appendChild( iframe );
 		return false;
 	}
 	
