@@ -136,7 +136,7 @@
     var form = createElement( '<form method="get" name="widgetform"></form>' );
     container.appendChild( form );
 
-    // handle onclick on the img to show input text
+    // handle onclick img to show input text
 	target.onclick = function() {
         addImportantStyle( parentContainer, [
                 'z-index:999',
@@ -171,16 +171,26 @@
             var to_close = function () {
                 for (var i = 0; i < form.childNodes.length; i++) {
                     form.removeChild(form.childNodes[i]);
+                    i--;
                 }
-                // fix remove all label childs at the same time
-                form.removeChild(close);
                 addImportantStyle( parentContainer, [
                         'display:none',
                       ]);
+                document.body.onkeyup = function(){}
+            }
+            // esc key handler
+            document.body.onkeyup = function( event ) {
+                var k = event.keyCode || event.which;
+                if ( k == 27 ) {
+                    to_close();
+                    return false;
+                } else {
+                    return true;
+                }
             }
             close.onclick = to_close;
             parentContainer.onclick = to_close;
-            container.onclick = function(event) { event.stopPropagation(); }
+            form.onclick = function(event) { event.stopPropagation(); }
             addImportantStyle( close, [
                     'display:block',
                     'position: absolute',
