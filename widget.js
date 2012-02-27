@@ -207,6 +207,7 @@
                     addImportantStyle( button, [
                             'display:block',
                             'margin: 0 auto',
+                            'width: 60px',
                           ]);
                     form.appendChild( button );
                 } else if ( podname.value.length == 0 ) {
