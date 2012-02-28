@@ -8,15 +8,18 @@
         }
         return elem;
     }
-    function addImportantStyle( el, styles ) {
-        var style = '';
-        for ( var i=0; i<styles.length; i++ ){
-            if ( styles[i][ styles[i].length-1 ] == ';' ) {
-                styles[i] = styles[i].substr( 0, styles[i].length-1 );
-            }
-            style += styles[i] + ' !important;';
+    function hasClass( el, className ) {
+        return ( (" " + el.className + " ").indexOf( " " + className + " " ) !== -1 );
+    }
+    function addClass( el, className ){
+        if ( ! hasClass( el, className ) ){
+            el.className = el.className + " " + className;
         }
-        el.setAttribute( 'style', style );
+    }
+    function removeClass( el, className ){
+        if ( hasClass( el, className ) ){
+            el.className = (" " + el.className + " ").split( " " + className + " " ).join('');
+        }
     }
 
     // append global div and set as widget
@@ -36,8 +39,16 @@
 		}
 	}
 	if ( ! is_eraser_css ) {
-        var link = createElement( '<link type="text/css" href="' + eraser_css_href + '" rel="stylesheet" />' );
-        document.head.appendChild( link );
+        if (document.createStyleSheet) {
+            document.createStyleSheet( eraser_css_href );
+        } else {
+            var link = document.createElement( 'link' );
+            link.setAttribute( 'type', 'text/css' );
+            link.setAttribute( 'href', eraser_css_href );
+            link.setAttribute( 'rel', 'stylesheet' );
+	        var heads = document.getElementsByTagName( 'head' );
+            heads[0].appendChild( link );
+        }
 	}
 	
     // img button
@@ -101,36 +112,16 @@
 		'zFBUlPERIICY/kEnLIcyAPUcAQKIBdgM/gPqE3z79n8Itn5B42HfQA3ePwABxPjyyaX2TZt2ZX3+/AXk' +
 		'kf9DyyP/GYGdQhYvb5fFAAEGANPsvlfQGVlZAAAAAElFTkSuQmCC';
     // <a> element with the Diaspora*'s img button
-    var target = createElement( '<a title="Share this at Diaspora*"></a>' );
-    addImportantStyle( target, [
-            'display:block',
-            'width: 50px',
-            'height: 60px',
-            'background:url(https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png) no-repeat',
-          ]);
+    var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">&nbsp;</a>' );
     widget.appendChild( target );
 
     // widget parentContainer
-    var parentContainer = createElement( '<div></div>' );
-    addImportantStyle( parentContainer, [
-            'display:none',
-          ]);
+    var parentContainer = createElement( '<div class="parent_container"></div>' );
     widget.appendChild( parentContainer );
 
     // widget container
-    var container = createElement( '<div></div>' );
-    addImportantStyle( container, [
-            'background-color: #FFFFFF',
-            'color: #000000',
-            'display: block',
-            'height: 70px',
-            'left: 50%',
-            'margin: -450px auto 0 -350px',
-            'position: absolute',
-            'top: 50%',
-            'width: 700px',
-          ]);
-    parentContainer.appendChild( container );
+    var container = createElement( '<div class="container"></div>' );
+    widget.appendChild( container );
 
     // form
     var form = createElement( '<form method="get" name="widgetform"></form>' );
@@ -138,49 +129,35 @@
 
     // handle onclick img to show input text
 	target.onclick = function() {
-        addImportantStyle( parentContainer, [
-                'z-index:999',
-                'width:100%',
-                'height:100%',
-                'display:block',
-                'position:absolute',
-                'top:0',
-                'left:0',
-                'background: rgb(0, 0, 0)',
-                'background: rgba(0, 0, 0, 0.6)',
-                'filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)',
-                '-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)',
-              ]);
+        addClass( parentContainer, 'show' );
+        addClass( container, 'show' );
 
         // label with input and submit button
         var labels = form.getElementsByTagName('label');
         if (labels.length == 0) {
-            var label = createElement( '<label for="podname">Pod Name: http://</label>' );
-            addImportantStyle( label, [
-                    'display: block',
-                    'text-align: center',
-                    'margin: 5px',
-                  ]);
+            var label = createElement( '<label class="label" for="podname">Pod Name: http://</label>' );
             form.appendChild( label );
 
-            var podname = createElement( '<input type="text" name="podname"></input>' );
+            var podname = createElement( '<input class="podname" type="text" name="podname"></input>' );
             label.appendChild( podname );
 
             // close button
-            var close = createElement( '<a href="javascript:;">Close</a>' );
+            var close = createElement( '<a class="close" href="javascript:;">Close</a>' );
             var to_close = function () {
                 for (var i = 0; i < form.childNodes.length; i++) {
                     form.removeChild(form.childNodes[i]);
                     i--;
                 }
-                addImportantStyle( parentContainer, [
-                        'display:none',
-                      ]);
+                removeClass( parentContainer, 'show' );
+                removeClass( container, 'show' );
                 document.body.onkeyup = function(){}
             }
             // esc key handler
             document.body.onkeyup = function( event ) {
-                var k = event.keyCode || event.which;
+        		if (window.event) {
+	                event = window.event;
+                }
+                var k = ( event.keyCode ) ? event.keyCode : event.which;
                 if ( k == 27 ) {
                     to_close();
                     return false;
@@ -190,25 +167,13 @@
             }
             close.onclick = to_close;
             parentContainer.onclick = to_close;
-            form.onclick = function(event) { event.stopPropagation(); }
-            addImportantStyle( close, [
-                    'display:block',
-                    'position: absolute',
-                    'top: 0',
-                    'right: 0',
-                  ]);
             form.appendChild( close );
 
             podname.select();
             podname.onkeyup = function () {
                 var buttons = container.getElementsByTagName('button');
                 if ( podname.value.length != 0 && buttons.length == 0 ) {
-                    var button = createElement( '<button name="submit" type="submit">Submit</button>' );
-                    addImportantStyle( button, [
-                            'display:block',
-                            'margin: 0 auto',
-                            'width: 60px',
-                          ]);
+                    var button = createElement( '<button class="button" name="submit" type="submit">Submit</button>' );
                     form.appendChild( button );
                 } else if ( podname.value.length == 0 ) {
                     form.removeChild(buttons[0]);
@@ -228,13 +193,7 @@
 		var label = form.getElementsByTagName('label');
 		var podurl = "https://" + label[0].childNodes[1].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
 		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
-        var iframe = createElement( '<iframe src="' + podurl + '"></iframe>' );
-        addImportantStyle( iframe, [
-                'width: 700px',
-                'height: 600px',
-                'border: 0',
-                'overflow: hidden',
-              ]);
+        var iframe = createElement( '<iframe class="iframe" src="' + podurl + '"></iframe>' );
         form.appendChild( iframe );
 		return false;
 	}
