@@ -388,35 +388,87 @@
     opacity:         0.6 !important;
 }
 .x-widget .container {
-    display:          none !important;
-    position:         absolute !important;
-    z-index:          999 !important;
-    height:           65px !important;
-    width:            700px !important;
-    margin:           0 auto 0 -350px !important;
-    background-color: #FFFFFF !important;
-    color:            #000000 !important;
-    left:             50% !important;
-    top:              10px !important;
+    display:               none !important;
+    position:              absolute !important;
+    z-index:               999 !important;
+    height:                90px !important;
+    width:                 700px !important;
+    margin:                0 auto 0 -350px !important;
+    background-color:      #FFFFFF !important;
+    color:                 #000000 !important;
+    left:                  50% !important;
+    top:                   10px !important;
+    -moz-border-radius:    20px !important;
+    -webkit-border-radius: 20px !important;
+    -khtml-border-radius:  20px !important;
+    border-radius:         20px !important;
 }
 .x-widget .label {
-    display: block !important;
+	float:      left !important;
+	width:      300px !important;
+	margin:     30px 0 10px 150px !important;
     text-align: center !important;
 }
+.x-widget .label span {
+	color:            #FFF !important;
+	background-color: #a8a1a8 !important;
+}
 .x-widget .podname {
-    margin:         5px !important;
     text-align:     left !important;
 }
 .x-widget .close {
-    position:       absolute !important;
-    top:            0 !important;
-    right:          0 !important;
+    position:        absolute !important;
+    display:         block !important;
+    width:           17px !important;
+    height:          18px !important;
+	margin-top:      5px !important;
+	margin-right:    12px !important;
+    top:             0 !important;
+    right:           0 !important;
+    line-height:     18px !important;
+    text-decoration: none !important;
+    background:      url( ./images/close-button.png ) no-repeat !important;
 }
 .x-widget .button {
-    display:        block !important;
-    width:          60px !important;
-    margin:         0 auto !important;
+	float:                 left !important;
+	margin:                26px 0 10px 30px !important;
+	color:                 #fff !important;
+	font-size:             14px !important;
+	padding-top:           5px !important;
+	padding-right:         10px !important;
+	padding-bottom:        5px !important;
+	padding-left:          10px !important;
+	text-decoration:       none !important;
+	-webkit-border-radius: 28px !important;
+	-moz-border-radius:    28px !important;
+	-webkit-box-shadow:    0px 1px 3px #666666 !important;
+	-moz-box-shadow:       0px 1px 3px #666666 !important;
+	text-shadow:           1px 1px 3px #8f8f8f !important;
+	border:                solid #a8a1a8 2px !important;
+	background:            #4d4c4d !important;
+}
+.x-widget .button:hover {
+	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ff1f1f), to(#872222)) !important;
+	background: -moz-linear-gradient(top, #ff1f1f, #872222) !important;
+	border: solid #666666 2px !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=undefined, endColorstr=undefined) !important;
 }
 .x-widget .show {
     display:        block !important;
+}
+.x-widget .bad-browser {
+	position: absolute !important;
+	z-index: 998 !important;
+	background-color: #FFF !important;
+    width:            700px !important;
+    margin:           0 auto 0 -350px !important;
+    left:             50% !important;
+    top:              100px !important;
+}
+.x-widget .bad-browser p {
+	color: #FF3D3D !important;
+	margin: 5px !important;
+}
+.x-widget .bad-browser p a:hover {
+	text-decoration: underline !important;
 }
