@@ -23,19 +23,17 @@
     }
 
     // append global div and set as widget
-    var div = createElement( '<div class="x-widget"></div>' );
-    document.body.appendChild( div );
+    document.write( '<div class="x-widget"></div>' );
 	var widgets = document.getElementsByTagName( 'div' );
 	var widget = widgets[ widgets.length - 1 ];
 	
     // check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = 'eraser.css';
+	var eraser_css_href = window.location.href + '/eraser.css';
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
-			break;
 		}
 	}
 	if ( ! is_eraser_css ) {
