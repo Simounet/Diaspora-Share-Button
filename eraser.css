@@ -391,7 +391,7 @@
     display:          none !important;
     position:         absolute !important;
     z-index:          999 !important;
-    height:           630px !important;
+    height:           65px !important;
     width:            700px !important;
     margin:           0 auto 0 -350px !important;
     background-color: #FFFFFF !important;
@@ -416,12 +416,6 @@
     display:        block !important;
     width:          60px !important;
     margin:         0 auto !important;
-}
-.x-widget .iframe {
-    width:          700px !important;
-    height:         600px !important;
-    border:         0 !important;
-    overflow:       hidden !important;
 }
 .x-widget .show {
     display:        block !important;
