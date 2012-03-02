@@ -46,9 +46,17 @@
 	}
 
     // append global div and set as widget
-    document.write( '<div class="x-widget"></div>' );
-	var widgets = document.getElementsByTagName( 'div' );
-	var widget = widgets[ widgets.length - 1 ];
+	var scripts = document.getElementsByTagName( 'script' );
+	var script = scripts[ scripts.length - 1 ];
+	var widget = createElement( '<div class="x-widget"></div>' );
+    script.parentNode.appendChild( widget );
+    script.parentNode.removeChild( script );
+/*    var langs = [ 'fr', 'en' ];
+    var lang = script.getAttribute( 'data-lang' );
+    if ( langs.indexOf( lang ) == -1 ) {
+        lang = 'en';
+    }
+  */
 	
     // check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
@@ -191,21 +199,14 @@
             form.appendChild( close );
 
             podname.select();
-            podname.onkeyup = function () {
-                var buttons = container.getElementsByTagName('button');
-                if ( podname.value.length != 0 && buttons.length == 0 ) {
-                    var button = createElement( '<button class="button" name="submit" type="submit">Submit</button>' );
-                    form.appendChild( button );
-                } else if ( podname.value.length == 0 ) {
-                    form.removeChild(buttons[0]);
-                }
-            }
+            var button = createElement( '<button class="button" name="submit" type="submit">Submit</button>' );
+            form.appendChild( button );
         } else {
             form.removeChild(labels[0]);
         }
 		// checks invalid browser
 		if ( ! is_valid_navigator( ) ) {
-			var badIE = createElement( '<div class="bad-browser"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, choose a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p></div>' );
+			var badIE = createElement( '<div class="bad-browser"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p></div>' );
 			form.appendChild( badIE );
 		}
 	}
