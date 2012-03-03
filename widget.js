@@ -1,6 +1,6 @@
 (function() {
     // Create HTML element by @tzilliox : https://gist.github.com/1868872
-    function createElement( str ) {
+    var createElement = function( str ) {
         var elem = document.createElement('div');
         elem.innerHTML = str;
         if ( elem.childNodes.length > 0 ) {
@@ -8,15 +8,15 @@
         }
         return elem;
     }
-    function hasClass( el, className ) {
+    var hasClass = function( el, className ) {
         return ( (" " + el.className + " ").indexOf( " " + className + " " ) !== -1 );
     }
-    function addClass( el, className ){
+    var addClass = function( el, className ){
         if ( ! hasClass( el, className ) ){
             el.className = el.className + " " + className;
         }
     }
-    function removeClass( el, className ){
+    var removeClass = function( el, className ){
         if ( hasClass( el, className ) ){
             el.className = (" " + el.className + " ").split( " " + className + " " ).join('');
         }
