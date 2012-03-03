@@ -21,6 +21,31 @@
             el.className = (" " + el.className + " ").split( " " + className + " " ).join('');
         }
     }
+	var get_url_argument_value = function( url, argument_name ) {
+		var get_arguments_url_part = function( url ) {
+			var indexOf;
+			if ( indexOf = url.indexOf( '?' ) + 1 ) {
+				url = decodeURIComponent( url.substring( indexOf ) ).replace( new RegExp( '\\+', 'g' ), ' ');
+				if ( indexOf = url.indexOf( '#' ) + 1 ) {
+					url = url.substring( 0, indexOf - 1 );
+				}
+				return url;
+			}
+		}
+		var get_argument_value = function( url ) {
+			var string_reverse = function( string ) {
+				return string.split('').reverse().join('');
+			}
+			url = '&' + url + '&';
+			var matches = new RegExp( '&([^=]*)=' + string_reverse( argument_name ) + '&').exec( string_reverse( url ) );
+			if( matches != null && matches.length > 1 ) {
+				return string_reverse( matches[ 1 ] );
+			}
+		}
+		
+		// LOGIC
+		return get_argument_value( get_arguments_url_part( url ), argument_name );
+	}
 
 	// Dectection of Internet Explorer version by @tzilliox : https://gist.github.com/1950913
 	// check browser
@@ -51,12 +76,11 @@
 	var widget = createElement( '<div class="x-widget"></div>' );
     script.parentNode.appendChild( widget );
     script.parentNode.removeChild( script );
-/*    var langs = [ 'fr', 'en' ];
-    var lang = script.getAttribute( 'data-lang' );
+    var langs = [ 'fr', 'en' ];
+    var lang = get_url_argument_value( script.getAttribute( 'src'), 'lang' );
     if ( langs.indexOf( lang ) == -1 ) {
         lang = 'en';
     }
-  */
 	
     // check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
@@ -68,16 +92,16 @@
 		}
 	}
 	if ( ! is_eraser_css ) {
-        if (document.createStyleSheet) {
-            document.createStyleSheet( eraser_css_href );
-        } else {
-            var link = document.createElement( 'link' );
-            link.setAttribute( 'type', 'text/css' );
-            link.setAttribute( 'href', eraser_css_href );
-            link.setAttribute( 'rel', 'stylesheet' );
-	        var heads = document.getElementsByTagName( 'head' );
-            heads[0].appendChild( link );
-        }
+	        if (document.createStyleSheet) {
+	            document.createStyleSheet( eraser_css_href );
+	        } else {
+	            var link = document.createElement( 'link' );
+	            link.setAttribute( 'type', 'text/css' );
+	            link.setAttribute( 'href', eraser_css_href );
+	            link.setAttribute( 'rel', 'stylesheet' );
+		        var heads = document.getElementsByTagName( 'head' );
+	            heads[0].appendChild( link );
+	        }
 	}
 	
     // img button
