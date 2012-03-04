@@ -31,6 +31,7 @@
 				}
 				return url;
 			}
+			return '';
 		}
 		var get_argument_value = function( url ) {
 			var string_reverse = function( string ) {
@@ -41,6 +42,7 @@
 			if( matches != null && matches.length > 1 ) {
 				return string_reverse( matches[ 1 ] );
 			}
+			return '';
 		}
 		
 		// LOGIC
@@ -76,9 +78,9 @@
 	var widget = createElement( '<div class="x-widget"></div>' );
 	script.parentNode.appendChild( widget );
 	script.parentNode.removeChild( script );
-	var langs = [ 'fr', 'en' ];
+	var langs = { fr: 'fr', en: 'en' };
 	var lang = get_url_argument_value( script.getAttribute( 'src'), 'lang' );
-	if ( langs.indexOf( lang ) == -1 ) {
+	if ( typeof langs[ lang ] == 'undefined' ) {
 		lang = 'en';
 	}
 	
