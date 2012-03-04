@@ -145,7 +145,7 @@
         }
 		// checks invalid browser
 		if ( ! is_valid_navigator( ) ) {
-			var badIE = createElement( '<div class="bad-browser"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p></div>' );
+			var badIE = createElement( '<div class="bad-browser"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p></div>' );
 			form.appendChild( badIE );
 		}
 	}
