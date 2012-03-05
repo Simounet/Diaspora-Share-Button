@@ -180,11 +180,20 @@
             // about Diaspora
 			var aboutDiaspora = createElement( '<div class="about"><a href="javascript:;">About Diaspora</a></div>' );
 			box.appendChild( aboutDiaspora );
+			var aboutCheck = false;
             aboutDiaspora.onclick = function () {
-	            // about container
-	            var aboutContainer = createElement( '<div class="box">Test</div>' );
-	            container.appendChild( aboutContainer );
-                return false;
+				if ( aboutCheck == false) {
+					// about container
+					var aboutContainer = createElement( '<div class="box"><strong>Diaspora*</strong> is the social network\'s future with real cares about privacy. If you\'re interested about it, go to <a href="https://joindiaspora.com/" title="Join Diaspora*" target="_blank">JoinDiaspora.com</a>.</div>' );
+					container.appendChild( aboutContainer );
+					aboutCheck = true;
+					return false;
+				} else {
+					//console.dir(container.lastChild);
+					container.removeChild( container.lastChild );
+					aboutCheck = false;
+					return false;
+				}
             }
 
 			podname.select();
