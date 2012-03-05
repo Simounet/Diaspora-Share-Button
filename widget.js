@@ -109,22 +109,35 @@
 	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">&nbsp;</a>' );
 	widget.appendChild( target );
 
-	// widget parentContainer
-	var parentContainer = createElement( '<div class="parent_container"></div>' );
-	widget.appendChild( parentContainer );
-
-	// widget container
-	var container = createElement( '<div class="container"></div>' );
-	widget.appendChild( container );
-
-	// form
-	var form = createElement( '<form method="get" name="widgetform"></form>' );
-	container.appendChild( form );
-
 	// handle onclick img to show input text
 	target.onclick = function() {
-		addClass( parentContainer, 'show' );
-		addClass( container, 'show' );
+	    // fix IE 6 go to the top onclick
+	    if ( ! is_valid_navigator( ) ) {
+            window.location.hash = '#';
+	    }
+
+	    var widget = createElement( '<div class="x-widget"></div>' );
+	    document.body.appendChild( widget );
+
+	    // popin parentContainer
+	    var parentContainer = createElement( '<div class="parent_container"></div>' );
+	    widget.appendChild( parentContainer );
+
+	    // popin container
+	    var container = createElement( '<div class="container"></div>' );
+	    widget.appendChild( container );
+
+	    // form
+	    var form = createElement( '<form method="get" name="widgetform"></form>' );
+	    container.appendChild( form );
+
+	    form.onsubmit = function() {
+		    var label = form.getElementsByTagName('label');
+		    var podurl = "https://" + label[0].childNodes[2].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
+		    // TODO: check if url/bookmarklet and url/.well-known/host-meta exist
+		    popitup( podurl );
+		    return false;
+	    }
 
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
@@ -142,8 +155,7 @@
 					form.removeChild(form.childNodes[i]);
 					i--;
 				}
-				removeClass( parentContainer, 'show' );
-				removeClass( container, 'show' );
+				document.body.removeChild( widget );
 				document.body.onkeyup = function(){}
 			}
 			// esc key handler
@@ -180,14 +192,6 @@
 	function popitup(url) {
 		newwindow=window.open(url,'name','height=700,width=600');
 		if (window.focus) { newwindow.focus(); }
-		return false;
-	}
-
-	form.onsubmit = function() {
-		var label = form.getElementsByTagName('label');
-		var podurl = "https://" + label[0].childNodes[2].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
-		// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
-		popitup( podurl );
 		return false;
 	}
 }) ();

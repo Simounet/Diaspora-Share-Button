@@ -376,21 +376,21 @@
     *background:      url( https://github.com/Simounet/Diaspora-Share-Button/raw/jqueryless/images/diaspora-share-button.png ) !important;
 }
 .x-widget .parent_container {
-    display:         none !important;
     position:        fixed !important;
     z-index:         998 !important;
     width:           100% !important;
     height:          100% !important;
-    _height:         2000px !important;
     top:             0 !important;
     left:            0 !important;
     background:      rgb(0, 0, 0) !important;
+    opacity:         0.6 !important;
+
+    _position:       absolute !important;
+    _height:         2000px !important;
     -ms-filter:      "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)" !important;
     filter:          alpha(opacity=60) !important;
-    opacity:         0.6 !important;
 }
 .x-widget .container {
-    display:               none !important;
     position:              fixed !important;
     z-index:               999 !important;
     height:                90px !important;
@@ -404,6 +404,8 @@
     -webkit-border-radius: 20px !important;
     -khtml-border-radius:  20px !important;
     border-radius:         20px !important;
+
+     _position:            absolute !important;
 }
 .x-widget .label {
 	float:      left !important;
