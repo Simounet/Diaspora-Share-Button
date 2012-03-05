@@ -126,10 +126,12 @@
 	    // popin container
 	    var container = createElement( '<div class="container"></div>' );
 	    widget.appendChild( container );
+	    var box = createElement( '<div class="box"></div>' );
+	    container.appendChild( box );
 
 	    // form
 	    var form = createElement( '<form method="get" name="widgetform"></form>' );
-	    container.appendChild( form );
+	    box.appendChild( form );
 
 	    form.onsubmit = function() {
 		    var label = form.getElementsByTagName('label');
@@ -175,6 +177,16 @@
 			parentContainer.onclick = to_close;
 			form.appendChild( close );
 
+            // about Diaspora
+			var aboutDiaspora = createElement( '<div class="about"><a href="javascript:;">About Diaspora</a></div>' );
+			box.appendChild( aboutDiaspora );
+            aboutDiaspora.onclick = function () {
+	            // about container
+	            var aboutContainer = createElement( '<div class="box">Test</div>' );
+	            container.appendChild( aboutContainer );
+                return false;
+            }
+
 			podname.select();
 			var button = createElement( '<button class="button" name="submit" type="submit">Submit</button>' );
 			form.appendChild( button );
@@ -183,8 +195,8 @@
 		}
 		// checks invalid browser
 		if ( ! is_valid_navigator( ) ) {
-			var badIE = createElement( '<div class="bad-browser"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p></div>' );
-			form.appendChild( badIE );
+			var badIE = createElement( '<div class="box"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p></div>' );
+			container.appendChild( badIE );
 		}
 	}
 
