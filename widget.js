@@ -86,7 +86,7 @@
 	// check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = window.location.href + '/eraser.css';
+	var eraser_css_href = 'http://' + window.location.hostname + window.location.pathname + 'eraser.css';
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
