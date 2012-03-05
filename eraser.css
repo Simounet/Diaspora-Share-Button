@@ -377,7 +377,7 @@
 }
 .x-widget .parent_container {
     display:         none !important;
-    position:        absolute !important;
+    position:        fixed !important;
     z-index:         998 !important;
     width:           100% !important;
     height:          100% !important;
@@ -391,7 +391,7 @@
 }
 .x-widget .container {
     display:               none !important;
-    position:              absolute !important;
+    position:              fixed !important;
     z-index:               999 !important;
     height:                90px !important;
     width:                 700px !important;
