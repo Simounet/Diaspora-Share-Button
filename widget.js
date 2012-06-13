@@ -144,14 +144,14 @@
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if (labels.length == 0) {
-			var label = createElement( '<label class="label" for="podname">Pod Name: <span>http://</span></label>' );
+			var label = createElement( '<label class="label" for="podname">' + locales.podname[lang] + ': <span>http://</span></label>' );
 			form.appendChild( label );
 
 			var podname = createElement( '<input class="podname" type="text" name="podname"></input>' );
 			label.appendChild( podname );
 
 			// close button
-			var close = createElement( '<a class="close" href="javascript:;" title="Close">&nbsp;</a>' );
+			var close = createElement( '<a class="close" href="javascript:;" title="' + locales.close[lang] + '">&nbsp;</a>' );
 			var to_close = function () {
 				for (var i = 0; i < form.childNodes.length; i++) {
 					form.removeChild(form.childNodes[i]);
@@ -178,13 +178,13 @@
 			form.appendChild( close );
 
             // about Diaspora
-			var aboutDiaspora = createElement( '<div class="about"><a href="javascript:;">About Diaspora</a></div>' );
+			var aboutDiaspora = createElement( '<div class="about"><a href="javascript:;">' + locales.about_diaspora[lang] + '</a></div>' );
 			box.appendChild( aboutDiaspora );
 			var aboutCheck = false;
             aboutDiaspora.onclick = function () {
 				if ( aboutCheck == false) {
 					// about container
-					var aboutContainer = createElement( '<div class="box"><strong>Diaspora*</strong> is the social network\'s future with real cares about privacy. If you\'re interested about it, go to <a href="https://joindiaspora.com/" title="Join Diaspora*" target="_blank">JoinDiaspora.com</a>.</div>' );
+					var aboutContainer = createElement( '<div class="box">' + locales.diaspora_infos[lang] + '</div>' );
 					container.appendChild( aboutContainer );
 					aboutCheck = true;
 					return false;
@@ -197,14 +197,14 @@
             }
 
 			podname.select();
-			var button = createElement( '<button class="button" name="submit" type="submit">Submit</button>' );
+			var button = createElement( '<button class="button" name="submit" type="submit">' + locales.submit[lang] + '</button>' );
 			form.appendChild( button );
 		} else {
 			form.removeChild(labels[0]);
 		}
 		// checks invalid browser
 		if ( ! is_valid_navigator( ) ) {
-			var badIE = createElement( '<div class="box"><p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a></p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p></div>' );
+			var badIE = createElement( '<div class="box">' + locales.old_browser[lang] + '</div>' );
 			container.appendChild( badIE );
 		}
 	}
@@ -215,4 +215,20 @@
 		if (window.focus) { newwindow.focus(); }
 		return false;
 	}
+
+    // locales array
+    // TODO: Locales generator from an external file
+    var locales = { "diaspora_infos" : { "en" : '<strong>Diaspora*</strong> is the social network\'s future with real cares about privacy. If you\'re interested about it, go to <a href="https://joindiaspora.com/" title="Join Diaspora*" target="_blank">JoinDiaspora.com</a>.',
+                                         "fr" : '<strong>Diaspora*</strong> est le r&eacute;seau social du futur qui se soucie vraiment de la confidentialit&eacute; des donn&eacute;es que vous y mettez. Si &ccedil;a vous int&eacute;resse, rendez-vous sur <a href="https://joindiaspora.com/" title="Join Diaspora*" target="_blank">JoinDiaspora.com</a>.' },
+                    "old_browser"    : { "en" : '<p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one: <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p>',
+                                         "fr" : '<p>Vous utilisez un navigateur d&eacute;pass&eacute; qui ne vous permet pas de profiter de toute la puissace d\'Internet. Si vous le pouvez, choisissez en un meilleur : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>Vous pouvez &eacute;galement installer Google Chrome Iframe comme sugg&eacute;r&eacute; par Diaspora* mais si vous optez pour la 1&egrave;re solution que je vous ai donn&eacute;, vous ne le regretterez pas ! &Ccedil;a ne doit &ecirc;tre que si vous ne pouvez vraiment pas installer un navigateur moderner.</p>' },
+                    "submit"         : { "en" : 'Submit',
+                                         "fr" : 'Valider' },
+                    "about_diaspora" : { "en" : 'About Diaspora*',
+                                         "fr" : '&Agrave; propos de Diaspora*' },
+                    "close"          : { "en" : 'Close',
+                                         "fr" : 'Fermer' },
+                    "podname"        : { "en" : 'Pod Address',
+                                         "fr" : 'Adresse du Pod ' }
+                  }
 }) ();
