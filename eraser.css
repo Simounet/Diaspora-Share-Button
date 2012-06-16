@@ -415,6 +415,7 @@
     padding-top:            15px !important;
     text-align:             right !important;
 	float:                  right !important;
+	min-width:              200px !important;
 }
 .x-widget .container .about a {
     font-size:              12px !important;
@@ -503,4 +504,5 @@
 .x-widget .bad-browser p a:hover {
 	text-decoration: underline !important;
 }
+
 
