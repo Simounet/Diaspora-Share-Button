@@ -26,10 +26,10 @@ This repository contains a project for a Diaspora's sharing button we can use wi
 Copy this folder wherever you want on your tree folder site installation but it must be accessible by your pages.
 Add the following code where you wanna place the button:
 > <code>&lt;script type="text/javascript" src="widget.js">&lt;/script></code>
-Use the index.html as an exemple.
+> Use the index.html as an exemple. The src must specify the full path URL to the widget.
 
 # Localization<br>
-You can handle localization adding a lang argument in the previous src attribute like this:
+You can handle localization adding a lang argument (only 'en' and 'fr' are supported by now) in the previous src attribute like this:
 > <code>&lt;script type="text/javascript" src="widget.js?lang=fr">&lt;/script></code><br>
 
 
