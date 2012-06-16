@@ -49,7 +49,7 @@
 		return get_argument_value( get_arguments_url_part( url ), argument_name );
 	}
 
-	// Dectection of Internet Explorer version by @tzilliox : https://gist.github.com/1950913
+	// Detection of Internet Explorer version by @tzilliox : https://gist.github.com/1950913
 	var is_valid_navigator = function( ) {
 
 		// UTILS
@@ -184,7 +184,7 @@
             aboutDiaspora.onclick = function () {
 				if ( aboutCheck == false) {
 					// about container
-					var aboutContainer = createElement( '<div class="box">' + locales.diaspora_infos[lang] + '</div>' );
+					var aboutContainer = createElement( '<div class="box decorated">' + locales.diaspora_infos[lang] + '</div>' );
 					container.appendChild( aboutContainer );
 					aboutCheck = true;
 					return false;

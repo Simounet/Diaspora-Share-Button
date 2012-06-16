@@ -398,7 +398,6 @@
     color:                 #000000 !important;
     left:                  50% !important;
     top:                   10px !important;
-
      _position:            absolute !important;
 }
 .x-widget .container .box {
@@ -410,7 +409,7 @@
     border-radius:         20px !important;
     margin-bottom:         20px !important;
 }
-.x-widget .container .box a:hover {
+.x-widget .container .box .about a:hover, .x-widget .container .box.decorated a:hover {
 	font-style:      italic !important;
 	text-decoration: underline !important;
 }
@@ -426,11 +425,11 @@
     overflow:              hidden !important;
 }
 .x-widget .label {
-	float:      left !important;
-	width:      450px !important;
+	float:         left !important;
+	width:         450px !important;
 	padding-right: 20px !important;
-    text-align: right !important;
-    line-height: 30px !important;
+    text-align:    right !important;
+    line-height:   30px !important;
 }
 .x-widget .label span {
 	color:            #FFF !important;
@@ -465,24 +464,29 @@
 	text-decoration:       none !important;
 	-webkit-border-radius: 28px !important;
 	-moz-border-radius:    28px !important;
+	border-radius:         28px !important; 
 	-webkit-box-shadow:    0px 1px 3px #666666 !important;
+    -khtml-border-radius:  20px !important;
 	-moz-box-shadow:       0px 1px 3px #666666 !important;
 	text-shadow:           1px 1px 3px #8f8f8f !important;
 	border:                solid #a8a1a8 2px !important;
 	background:            #4d4c4d !important;
 }
 .x-widget .button:hover {
-	background: -webkit-gradient(linear, 0 0, 0 100%, from(#ff1f1f), to(#872222)) !important;
-	background: -moz-linear-gradient(top, #ff1f1f, #872222) !important;
-	border: solid #666666 2px !important;
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=undefined, endColorstr=undefined) !important;
+	background:       -webkit-gradient(linear, 0 0, 0 100%, from(#ff1f1f), to(#872222)) !important;
+	background:       -moz-linear-gradient(top, #ff1f1f, #872222) !important;
+	filter:           progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ff1f1f', endColorstr='#872222') !important; /* IE6 & IE7 */
+	-ms-filter:       "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ff1f1f', endColorstr='#872222')" !important; /* IE8 */
+	background-color: #ff1f1f !important;
+	border:           solid #666666 2px !important;
+
 }
 .x-widget .show {
-    display:        block !important;
+    display:          block !important;
 }
 .x-widget .bad-browser {
-	position: absolute !important;
-	z-index: 998 !important;
+	position:         absolute !important;
+	z-index:          998 !important;
 	background-color: #FFF !important;
     width:            700px !important;
     margin:           0 auto 0 -350px !important;
@@ -490,7 +494,7 @@
     top:              100px !important;
 }
 .x-widget .bad-browser p {
-	color: #FF3D3D !important;
+	color:  #FF3D3D !important;
 	margin: 5px !important;
 }
 .x-widget .bad-browser p a:hover {
