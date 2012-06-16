@@ -90,7 +90,8 @@
 	// check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = 'http://' + window.location.hostname + window.location.pathname + widgetPath + 'eraser.css';
+	var eraser_css_href = 'http://' + window.location.hostname + widgetPath + 'eraser.css';
+	console.log(eraser_css_href);
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
@@ -110,7 +111,7 @@
 	}
 	
 	// <a> element with the Diaspora*'s img button
-	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">&nbsp;</a>' );
+	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">Diaspora Share Button</a>' );
 	widget.appendChild( target );
 
 	// handle onclick img to show input text
@@ -155,7 +156,7 @@
 			label.appendChild( podname );
 
 			// close button
-			var close = createElement( '<a class="close" href="javascript:;" title="' + locales.close[lang] + '">&nbsp;</a>' );
+			var close = createElement( '<a class="close" href="javascript:;" title="' + locales.close[lang] + '">Close button</a>' );
 			var to_close = function () {
 				for (var i = 0; i < form.childNodes.length; i++) {
 					form.removeChild(form.childNodes[i]);
@@ -236,3 +237,4 @@
                                          "fr" : 'Adresse du Pod ' }
                   }
 }) ();
+

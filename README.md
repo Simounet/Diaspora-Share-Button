@@ -55,3 +55,6 @@ You can handle localization adding a lang argument in the previous src attribute
 
 ## 0.3.3<br>
     updated eraser.css load URL in the JS, change button img URL (if data uri can't be used)
+
+## 0.3.4<br>
+    created button css set to inline-block, DSB and Close buttons accessibility
