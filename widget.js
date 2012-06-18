@@ -71,6 +71,15 @@
 		return true;
 	}
 
+    // DataURI detection
+    var noDataURI = 0;
+    var data = new Image();
+    data.onload = data.onerror = function(){
+	    if(this.width != 1 || this.height != 1){
+		    noDataURI = 1;
+	    }
+    }
+
 	// append global div and set as widget
 	var scripts = document.getElementsByTagName( 'script' );
 	var script = scripts[ scripts.length - 1 ];
@@ -82,16 +91,24 @@
 	if ( typeof langs[ lang ] == 'undefined' ) {
 		lang = 'en';
 	}
+
+    // cdn used
+    var cdnUsed = get_url_argument_value( script.getAttribute( 'src'), 'cdn' );
+	if ( typeof cdnUsed == 'undefined' ) {
+		var imagesPath = widgetPath + 'images/';
+	} else {
+        var imagesPath = 'https://github.com/Simounet/Diaspora-Share-Button/raw/master/images/';
+    }
 	
 	// get path to the widget
 	var widgetPath = script.getAttribute( 'src' ).split("widget.js");
-	widgetPath = widgetPath[0];
+	widgetPath = 'http://' + window.location.hostname + widgetPath[0];
 	
 	// check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = 'http://' + window.location.hostname + widgetPath + 'eraser.css';
-	console.log(eraser_css_href);
+	var eraser_css_href = widgetPath + 'eraser.css';
+	//console.log(eraser_css_href);
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
@@ -111,7 +128,10 @@
 	}
 	
 	// <a> element with the Diaspora*'s img button
-	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">Diaspora Share Button</a>' );
+	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">Diaspora Share Button</a>' );;
+    if (noDataURI == 1) {
+        target.setAttribute( 'background-image', 'url( ' + imagesPath + 'diaspora-share-button.png ) !important' );
+    }
 	widget.appendChild( target );
 
 	// handle onclick img to show input text
@@ -157,6 +177,9 @@
 
 			// close button
 			var close = createElement( '<a class="close" href="javascript:;" title="' + locales.close[lang] + '">Close button</a>' );
+            if (noDataURI == 1) {
+                close.setAttribute( 'background-image', 'url( ' + imagesPath + 'close-button.png ) !important' );
+            }
 			var to_close = function () {
 				for (var i = 0; i < form.childNodes.length; i++) {
 					form.removeChild(form.childNodes[i]);
