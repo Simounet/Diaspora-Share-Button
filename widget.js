@@ -71,6 +71,30 @@
 		return true;
 	}
 
+	// DataURI detection by @tzilliox https://gist.github.com/2953065
+	var fallback_datauri = function( fallback ){
+		var datauri = new Image();
+		datauri.onerror = fallback;
+		datauri.onload = function() {
+			if (datauri.width != 1 || datauri.height != 1) {
+				fallback();
+			}
+		};
+		datauri.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+	};
+
+	// set image if DataURI not supported (thanks to @tzilliox AGAIN! https://gist.github.com/2953155 )
+	var add_background_image = function( element, url ){
+		// Specific old IE
+		if ( document.all ) {
+			element.style.setAttribute( 'cssText', 'background-image: url( "' + url + '" ) !important' );
+
+		// Modern browser
+		} else {
+			element.setAttribute( 'style', 'background-image: url( "' + url + '" ) !important' );
+		}
+	}
+
 	// append global div and set as widget
 	var scripts = document.getElementsByTagName( 'script' );
 	var script = scripts[ scripts.length - 1 ];
@@ -85,13 +109,21 @@
 	
 	// get path to the widget
 	var widgetPath = script.getAttribute( 'src' ).split("widget.js");
-	widgetPath = widgetPath[0];
+	widgetPath = 'http://' + window.location.hostname + widgetPath[0];
+
+	// cdn used
+	var cdnUsed = get_url_argument_value( script.getAttribute( 'src'), 'cdn' );
+	if ( cdnUsed == 'true' ) {
+		var imagesPath = 'https://github.com/Simounet/Diaspora-Share-Button/raw/master/images/';
+	} else {
+		var imagesPath = widgetPath + 'images/';
+	}
 	
 	// check if eraser.css is already set
 	var links = document.getElementsByTagName( 'link' );
 	var is_eraser_css = false;
-	var eraser_css_href = 'http://' + window.location.hostname + widgetPath + 'eraser.css';
-	console.log(eraser_css_href);
+	var eraser_css_href = widgetPath + 'eraser.css';
+	//console.log(eraser_css_href);
 	for ( i=0; i<links.length; i++ ) {
 		if ( links[ i ].href == eraser_css_href ) {
 			is_eraser_css = true;
@@ -112,39 +144,43 @@
 	
 	// <a> element with the Diaspora*'s img button
 	var target = createElement( '<a class="target" href="javascript:;" title="Share this at Diaspora*">Diaspora Share Button</a>' );
+	fallback_datauri( function( ) {
+		var disporaShareButtonImage = imagesPath + 'diaspora-share-button.png';
+		add_background_image(target, disporaShareButtonImage);
+	} );
 	widget.appendChild( target );
 
 	// handle onclick img to show input text
 	target.onclick = function() {
-	    // fix IE 6 go to the top onclick
-	    if ( ! is_valid_navigator( ) ) {
-            window.location.hash = '#';
-	    }
+		// fix IE 6 go to the top onclick
+		if ( ! is_valid_navigator( ) ) {
+			window.location.hash = '#';
+		}
 
-	    var widget = createElement( '<div class="x-widget"></div>' );
-	    document.body.appendChild( widget );
+		var widget = createElement( '<div class="x-widget"></div>' );
+		document.body.appendChild( widget );
 
-	    // popin parentContainer
-	    var parentContainer = createElement( '<div class="parent_container"></div>' );
-	    widget.appendChild( parentContainer );
+		// popin parentContainer
+		var parentContainer = createElement( '<div class="parent_container"></div>' );
+		widget.appendChild( parentContainer );
 
-	    // popin container
-	    var container = createElement( '<div class="container"></div>' );
-	    widget.appendChild( container );
-	    var box = createElement( '<div class="box"></div>' );
-	    container.appendChild( box );
+		// popin container
+		var container = createElement( '<div class="container"></div>' );
+		widget.appendChild( container );
+		var box = createElement( '<div class="box"></div>' );
+		container.appendChild( box );
 
-	    // form
-	    var form = createElement( '<form method="get" name="widgetform"></form>' );
-	    box.appendChild( form );
+		// form
+		var form = createElement( '<form method="get" name="widgetform"></form>' );
+		box.appendChild( form );
 
-	    form.onsubmit = function() {
-		    var label = form.getElementsByTagName('label');
-		    var podurl = "https://" + label[0].childNodes[2].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
-		    // TODO: check if url/bookmarklet and url/.well-known/host-meta exist
-		    popitup( podurl );
-		    return false;
-	    }
+		form.onsubmit = function() {
+			var label = form.getElementsByTagName('label');
+			var podurl = "https://" + label[0].childNodes[2].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
+			// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
+			popitup( podurl );
+			return false;
+		}
 
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
@@ -157,6 +193,10 @@
 
 			// close button
 			var close = createElement( '<a class="close" href="javascript:;" title="' + locales.close[lang] + '">Close button</a>' );
+			fallback_datauri (function() {
+				var closeButtonImage = imagesPath + 'close-button.png';
+				add_background_image(close, closeButtonImage);
+			});
 			var to_close = function () {
 				for (var i = 0; i < form.childNodes.length; i++) {
 					form.removeChild(form.childNodes[i]);
@@ -182,11 +222,11 @@
 			parentContainer.onclick = to_close;
 			form.appendChild( close );
 
-            // about Diaspora
+			// about Diaspora
 			var aboutDiaspora = createElement( '<div class="about"><a href="javascript:;">' + locales.about_diaspora[lang] + '</a></div>' );
 			box.appendChild( aboutDiaspora );
 			var aboutCheck = false;
-            aboutDiaspora.onclick = function () {
+			aboutDiaspora.onclick = function () {
 				if ( aboutCheck == false) {
 					// about container
 					var aboutContainer = createElement( '<div class="box decorated">' + locales.diaspora_infos[lang] + '</div>' );
@@ -199,7 +239,7 @@
 					aboutCheck = false;
 					return false;
 				}
-            }
+			}
 
 			podname.select();
 			var button = createElement( '<button class="button" name="submit" type="submit">' + locales.submit[lang] + '</button>' );
@@ -221,20 +261,20 @@
 		return false;
 	}
 
-    // locales array
-    // TODO: Locales generator from an external file
-    var locales = { "diaspora_infos" : { "en" : '<strong>Diaspora*</strong> is the social network\'s future with real cares about privacy. If you\'re interested about it, go to <a href="http://diasporaproject.org/" title="The Diaspora* Project" target="_blank">The Diaspora* Project</a>.',
-                                         "fr" : '<strong>Diaspora*</strong> est le r&eacute;seau social du futur qui se soucie vraiment de la confidentialit&eacute; des donn&eacute;es que vous y mettez. Si &ccedil;a vous int&eacute;resse, rendez-vous sur <a href="http://diasporaproject.org/" title="The Diaspora* Project" target="_blank">The Diaspora* Project</a>.' },
-                    "old_browser"    : { "en" : '<p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one: <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p>',
-                                         "fr" : '<p>Vous utilisez un navigateur d&eacute;pass&eacute; qui ne vous permet pas de profiter de toute la puissace d\'Internet. Si vous le pouvez, choisissez en un meilleur : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>Vous pouvez &eacute;galement installer Google Chrome Iframe comme sugg&eacute;r&eacute; par Diaspora* mais si vous optez pour la 1&egrave;re solution que je vous ai donn&eacute;, vous ne le regretterez pas ! &Ccedil;a ne doit &ecirc;tre que si vous ne pouvez vraiment pas installer un navigateur moderner.</p>' },
-                    "submit"         : { "en" : 'Submit',
-                                         "fr" : 'Valider' },
-                    "about_diaspora" : { "en" : 'About Diaspora*',
-                                         "fr" : '&Agrave; propos de Diaspora*' },
-                    "close"          : { "en" : 'Close',
-                                         "fr" : 'Fermer' },
-                    "podname"        : { "en" : 'Pod Address',
-                                         "fr" : 'Adresse du Pod ' }
-                  }
+	// locales array
+	// TODO: Locales generator from an external file
+	var locales = { "diaspora_infos" : { "en" : '<strong>Diaspora*</strong> is the social network\'s future with real cares about privacy. If you\'re interested about it, go to <a href="http://diasporaproject.org/" title="The Diaspora* Project" target="_blank">The Diaspora* Project</a>.',
+										 "fr" : '<strong>Diaspora*</strong> est le r&eacute;seau social du futur qui se soucie vraiment de la confidentialit&eacute; des donn&eacute;es que vous y mettez. Si &ccedil;a vous int&eacute;resse, rendez-vous sur <a href="http://diasporaproject.org/" title="The Diaspora* Project" target="_blank">The Diaspora* Project</a>.' },
+					"old_browser"	: { "en" : '<p>You are browsing the web with an outdated tool that doesn\'t allow you to feel the full power of the Internet. If you can, pick a best one: <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>You can also install Google Chrome Iframe as suggested by Diaspora* but if you choose the first solution I gave to you, you won\'t regret it! It must be that if you really can\'t install a modern browser.</p>',
+										 "fr" : '<p>Vous utilisez un navigateur d&eacute;pass&eacute; qui ne vous permet pas de profiter de toute la puissace d\'Internet. Si vous le pouvez, choisissez en un meilleur : <a href="http://www.mozilla.org/firefox/" target="_blank">Firefox</a>.</p><p>Vous pouvez &eacute;galement installer Google Chrome Iframe comme sugg&eacute;r&eacute; par Diaspora* mais si vous optez pour la 1&egrave;re solution que je vous ai donn&eacute;, vous ne le regretterez pas ! &Ccedil;a ne doit &ecirc;tre que si vous ne pouvez vraiment pas installer un navigateur moderner.</p>' },
+					"submit"		 : { "en" : 'Submit',
+										 "fr" : 'Valider' },
+					"about_diaspora" : { "en" : 'About Diaspora*',
+										 "fr" : '&Agrave; propos de Diaspora*' },
+					"close"		  : { "en" : 'Close',
+										 "fr" : 'Fermer' },
+					"podname"		: { "en" : 'Pod Address',
+										 "fr" : 'Adresse du Pod ' }
+				  }
 }) ();
 
