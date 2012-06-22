@@ -95,9 +95,6 @@
 		}
 	}
 
-	// check if str starts with
-	var startsWith = function(handle, needle) {return (handle.match("^"+needle)==needle)}
-
 	// append global div and set as widget
 	var scripts = document.getElementsByTagName( 'script' );
 	var script = scripts[ scripts.length - 1 ];
@@ -111,13 +108,34 @@
 	}
 	
 	// get path to the widget
-	var widgetPath = script.getAttribute( 'src' ).split("widget.js");
-	widgetPath = widgetPath[0];
-	if (startsWith(widgetPath, 'http://') || startsWith(widgetPath, 'https://') || startsWith(widgetPath, '//')) {
-		widgetPath = widgetPath;
-	} else {
-		widgetPath = 'http://' + window.location.hostname + widgetPath;
+	var get_widget_path = function ( src ) {
+		// tools
+		var startsWith = function(handle, needle) {return (handle.match("^"+needle)==needle)}
+		var endsWith = function(handle, needle) {return (handle.match(needle+"$")==needle)}
+		var dirname = function(path) {return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');}
+
+		var widgetPath = src.split("widget.js");
+		widgetPath = widgetPath[0];
+		if ( startsWith(widgetPath, 'https://') ) {
+			widgetPath = widgetPath.substr(6);
+		}
+		if ( startsWith(widgetPath, '//') ) {
+			widgetPath = widgetPath.substr(2);
+			widgetPath = 'http://' + widgetPath;
+		}
+
+		if ( startsWith( widgetPath, '/') ) {
+			widgetPath = 'http://' + window.location.hostname + widgetPath;
+		} else if ( ! startsWith(widgetPath, 'http://') ) {
+			var path = window.location.pathname;
+			if ( ! endsWith(path, '/') ) {
+				path = dirname( path ) + '/';
+			}
+			widgetPath = 'http://' + window.location.hostname + path + widgetPath;
+		}
+		return widgetPath;
 	}
+	var widgetPath = get_widget_path( script.getAttribute( 'src' ) );
 
 	// cdn used
 	var cdnUsed = get_url_argument_value( script.getAttribute( 'src'), 'cdn' );
