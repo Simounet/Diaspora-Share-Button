@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Diaspora-share-button : " />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Diaspora-share-button</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Simounet/Diaspora-Share-Button">View on GitHub</a>
+
+          <h1 id="project_title">Diaspora-share-button</h1>
+          <h2 id="project_tagline"></h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Simounet/Diaspora-Share-Button/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Simounet/Diaspora-Share-Button/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Description</h1>
+
+<p>This repository contains a project for a Diaspora's sharing button we can use with every pod in the world.</p>
+
+<h1>About the author</h1>
+
+<p><strong>Site:</strong> <a href="http://www.simounet.net">http://www.simounet.net</a> <br><strong>Diaspora's profile:</strong> <a href="https://diasp.org/u/simon">Simon@diasp.org</a> <br><strong>Twitter profile:</strong> <a href="http://twitter.com/Simounet">@Simounet</a> <br></p>
+
+<h1>Used in this project</h1>
+
+<p><strong>Eraser.css</strong> <a href="http://github.com/necolas/eraser.css">http://github.com/necolas/eraser.css</a> <br><strong>Create HTML element</strong> <a href="https://gist.github.com/1868872">https://gist.github.com/1868872</a> <br><strong>Detection of Internet Explorer version</strong> <a href="https://gist.github.com/1950913">https://gist.github.com/1950913</a> <br></p>
+
+<h1>Thanks</h1>
+
+<blockquote>
+<p><a href="https://github.com/tzilliox" class="user-mention">@tzilliox</a> for your time and your good advices. <br></p>
+</blockquote>
+
+<h1>Description</h1>
+
+<p>This repository contains a project for a Diaspora's sharing button we can use with every pod in the world. It's easy for every webmaster to add it (just one line of code), handles cdn for images (the button itself and the close button), translations and (should :p) works for each browser (even IE6, 7 &amp; 8). (I hope) It will change quickly in the next few weeks so stay tuned and do git pull!</p>
+
+<h1>Installation</h1>
+
+<p>Copy this folder wherever you want on your tree folder site installation but it must be accessible by your pages.
+Add the following code where you wanna place the button:</p>
+
+<blockquote>
+<p><code>&lt;script type="text/javascript" src="widget.js"&gt;&lt;/script&gt;</code>
+Use the index.html as an exemple. The src must specify the full path URL to the widget.</p>
+</blockquote>
+
+<h1>Localization<br>
+</h1>
+
+<p>You can handle localization adding a lang argument (only 'en' and 'fr' are supported by now) in the previous src attribute like this:</p>
+
+<blockquote>
+<p><code>&lt;script type="text/javascript" src="widget.js?lang=fr"&gt;&lt;/script&gt;</code><br></p>
+</blockquote>
+
+<h1>CDN<br>
+</h1>
+
+<p>You can activate a <a href="https://en.wikipedia.org/wiki/Content_delivery_network">CDN</a> (Github by now) adding this 'cdn' attribute to your widget src url. If you don't, your domain will be used instead. Diaspora Share Button images set inside the css with <a href="https://en.wikipedia.org/wiki/Data_Uri">data uri</a> so if the browser used is not IE 6 or 7, it won't require access to image files.</p>
+
+<blockquote>
+<p><code>&lt;script type="text/javascript" src="widget.js?cdn=true"&gt;&lt;/script&gt;</code><br></p>
+</blockquote>
+
+<h1>Infos</h1>
+
+<ul>
+<li>
+<strong>License</strong><br><a href="http://www.gnu.org/licenses/lgpl-2.1.html">GNU Lesser General Public License, version 2.1</a> <br>
+</li>
+</ul><h1>Changelog</h1>
+
+<h2>0.3.5<br>
+</h2>
+
+<pre><code>option to set up a cdn for images, detection of Data URI availability
+</code></pre>
+
+<h2>0.3.4<br>
+</h2>
+
+<pre><code>created button css set to inline-block, DSB and Close buttons accessibility
+</code></pre>
+
+<h2>0.3.3<br>
+</h2>
+
+<pre><code>updated eraser.css load URL in the JS, change button img URL (if data uri can't be used)
+</code></pre>
+
+<h2>0.3.2<br>
+</h2>
+
+<pre><code>CSS cleaned (border-radius, remove underline for close link)
+</code></pre>
+
+<h2>0.3.1<br>
+</h2>
+
+<pre><code>Localization handler
+</code></pre>
+
+<h2>0.3<br>
+</h2>
+
+<pre><code>Jqueryless version
+</code></pre>
+
+<h2>0.1<br>
+</h2>
+
+<pre><code>Initial Release
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Diaspora-share-button maintained by <a href="https://github.com/Simounet">Simounet</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-2541672-8");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+
+  </body>
+</html>
