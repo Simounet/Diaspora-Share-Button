@@ -5,7 +5,7 @@ This repository contains a project for a Diaspora's sharing button we can use wi
 # About the author
 
 **Site:** http://www.simounet.net <br>
-**Diaspora's profile:** [Simon@diasp.org](https://diasp.org/people/4d0cedcf3dac138c5d0000f0) <br>
+**Diaspora's profile:** [Simon@diasp.org](https://diasp.org/u/simon) <br>
 **Twitter profile:** [@Simounet](http://twitter.com/Simounet) <br>
 
 # Used in this project
