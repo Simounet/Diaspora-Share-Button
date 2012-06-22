@@ -95,6 +95,9 @@
 		}
 	}
 
+	// check if str starts with
+	var startsWith = function(handle, needle) {return (handle.match("^"+needle)==needle)}
+
 	// append global div and set as widget
 	var scripts = document.getElementsByTagName( 'script' );
 	var script = scripts[ scripts.length - 1 ];
@@ -109,7 +112,12 @@
 	
 	// get path to the widget
 	var widgetPath = script.getAttribute( 'src' ).split("widget.js");
-	widgetPath = 'http://' + window.location.hostname + widgetPath[0];
+	widgetPath = widgetPath[0];
+	if (startsWith(widgetPath, 'http://') || startsWith(widgetPath, 'https://') || startsWith(widgetPath, '//')) {
+		widgetPath = widgetPath;
+	} else {
+		widgetPath = 'http://' + window.location.hostname + widgetPath;
+	}
 
 	// cdn used
 	var cdnUsed = get_url_argument_value( script.getAttribute( 'src'), 'cdn' );
