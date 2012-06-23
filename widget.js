@@ -207,7 +207,11 @@
 			popitup( podurl );
 			return false;
 		}
-
+		
+		// title
+		var title = createElement( '<div class="title">' + locales.title[lang] + '</div>' );
+		form.appendChild( title );
+		
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if (labels.length == 0) {
@@ -297,6 +301,8 @@
 										 "fr" : 'Valider' },
 					"about_diaspora" : { "en" : 'About Diaspora*',
 										 "fr" : '&Agrave; propos de Diaspora*' },
+					"title"          : { "en" : 'Share this page on Diaspora*',
+										 "fr" : 'Partager cette page sur Diaspora*'},
 					"close"		  : { "en" : 'Close',
 										 "fr" : 'Fermer' },
 					"podname"		: { "en" : 'Pod Address',
