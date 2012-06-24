@@ -44,6 +44,9 @@ You can activate a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)
 
 # Changelog
 
+## 0.3.6<br>
+    img button and data uri replaced by a new one, widget path handling (full, relative, htts), title added to the lightbox, about Diaspora displayed directly (not a toggle function anymore)
+
 ## 0.3.5<br>
     option to set up a cdn for images, detection of Data URI availability
 
