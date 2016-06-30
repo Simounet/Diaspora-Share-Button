@@ -21,15 +21,16 @@ You can activate a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)
 `<script type="text/javascript" src="widget.js?cdn=true"></script>`
 
 ## Used in this project
-**Eraser.css** http://github.com/necolas/eraser.css
-**Create HTML element** https://gist.github.com/1868872
-**Detection of Internet Explorer version** https://gist.github.com/1950913
+
+- **Eraser.css** http://github.com/necolas/eraser.css
+- **Create HTML element** https://gist.github.com/1868872
+- **Detection of Internet Explorer version** https://gist.github.com/1950913
 
 ## About the author
 
-**Site:** http://www.simounet.net
-**Diaspora's profile:** [Simon@diasp.org](https://diasp.org/u/simon)
-**Twitter profile:** [@Simounet](http://twitter.com/Simounet)
+- **Site:** http://www.simounet.net
+- **Diaspora's profile:** [Simon@diasp.org](https://diasp.org/u/simon)
+- **Twitter profile:** [@Simounet](http://twitter.com/Simounet)
 
 ## Thanks
 @tzilliox for your time and your good advices.
