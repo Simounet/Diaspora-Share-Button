@@ -7,47 +7,48 @@
 			return elem.childNodes[0];
 		}
 		return elem;
-	}
+	};
 	var hasClass = function( el, className ) {
 		return ( (" " + el.className + " ").indexOf( " " + className + " " ) !== -1 );
-	}
+	};
 	var addClass = function( el, className ){
 		if ( ! hasClass( el, className ) ){
 			el.className = el.className + " " + className;
 		}
-	}
+	};
 	var removeClass = function( el, className ){
 		if ( hasClass( el, className ) ){
 			el.className = (" " + el.className + " ").split( " " + className + " " ).join('');
 		}
-	}
+	};
 	var get_url_argument_value = function( url, argument_name ) {
 		var get_arguments_url_part = function( url ) {
-			var indexOf;
-			if ( indexOf = url.indexOf( '?' ) + 1 ) {
+			var indexOf = url.indexOf( '?' ) + 1;
+			if ( indexOf ) {
 				url = decodeURIComponent( url.substring( indexOf ) ).replace( new RegExp( '\\+', 'g' ), ' ');
-				if ( indexOf = url.indexOf( '#' ) + 1 ) {
+                                indexOf =  url.indexOf( '#' ) + 1;
+				if ( indexOf ) {
 					url = url.substring( 0, indexOf - 1 );
 				}
 				return url;
 			}
 			return '';
-		}
+		};
 		var get_argument_value = function( url ) {
 			var string_reverse = function( string ) {
 				return string.split('').reverse().join('');
-			}
+			};
 			url = '&' + url + '&';
 			var matches = new RegExp( '&([^=]*)=' + string_reverse( argument_name ) + '&').exec( string_reverse( url ) );
-			if( matches != null && matches.length > 1 ) {
+			if( matches !== null && matches.length > 1 ) {
 				return string_reverse( matches[ 1 ] );
 			}
 			return '';
-		}
+		};
 		
 		// LOGIC
 		return get_argument_value( get_arguments_url_part( url ), argument_name );
-	}
+	};
 
 	// Detection of Internet Explorer version by @tzilliox : https://gist.github.com/1950913
 	var is_valid_navigator = function( ) {
@@ -55,21 +56,21 @@
 		// UTILS
 		var is_internet_explorer = function( ) {
 		return ( window.navigator.appName == 'Microsoft Internet Explorer' );
-		}
+		};
 		var get_internet_explorer_version = function( ) {
 			var matches = new RegExp( ' MSIE ([0-9]\.[0-9]);' ).exec( window.navigator.userAgent );
-			if ( matches != null && matches.length > 1 ) {
+			if ( matches !== null && matches.length > 1 ) {
 				return matches[ 1 ];
 			}
 			return false;
-		}
+		};
 
 		// LOGIC
 		if ( is_internet_explorer( ) ) {
 			return ( get_internet_explorer_version( ) > 7 );
 		}
 		return true;
-	}
+	};
 
 	// DataURI detection by @tzilliox https://gist.github.com/2953065
 	var fallback_datauri = function( fallback ){
@@ -93,7 +94,7 @@
 		} else {
 			element.setAttribute( 'style', 'background-image: url( "' + url + '" ) !important' );
 		}
-	}
+	};
 
 	// append global div and set as widget
 	var scripts = document.getElementsByTagName( 'script' );
@@ -110,9 +111,9 @@
 	// get path to the widget
 	var get_widget_path = function ( src ) {
 		// tools
-		var startsWith = function(handle, needle) {return (handle.match("^"+needle)==needle)}
-		var endsWith = function(handle, needle) {return (handle.match(needle+"$")==needle)}
-		var dirname = function(path) {return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');}
+		var startsWith = function(handle, needle) {return (handle.match("^"+needle)==needle);};
+		var endsWith = function(handle, needle) {return (handle.match(needle+"$")==needle);};
+		var dirname = function(path) {return path.replace(/\\/g, '/').replace(/\/[^\/]*\/?$/, '');};
 
 		var widgetPath = src.split("widget.js");
 		widgetPath = widgetPath[0];
@@ -134,15 +135,16 @@
 			widgetPath = window.location.protocol + '//' + window.location.hostname + path + widgetPath;
 		}
 		return widgetPath;
-	}
+	};
 	var widgetPath = get_widget_path( script.getAttribute( 'src' ) );
 
 	// cdn used
 	var cdnUsed = get_url_argument_value( script.getAttribute( 'src'), 'cdn' );
+        var imagesPath = '';
 	if ( cdnUsed == 'true' ) {
-		var imagesPath = 'https://github.com/Simounet/Diaspora-Share-Button/raw/master/images/';
+		imagesPath = 'https://github.com/Simounet/Diaspora-Share-Button/raw/master/images/';
 	} else {
-		var imagesPath = widgetPath + 'images/';
+		imagesPath = widgetPath + 'images/';
 	}
 	
 	// check if eraser.css is already set
@@ -206,7 +208,7 @@
 			// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
 			popitup( podurl );
 			return false;
-		}
+		};
 		
 		// title
 		var title = createElement( '<div class="title">' + locales.title[lang] + '</div>' );
@@ -214,7 +216,7 @@
 		
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
-		if (labels.length == 0) {
+		if (labels.length === 0) {
 			var label = createElement( '<label class="label" for="podname">' + locales.podname[lang] + '</label>' );
 			form.appendChild( label );
 
@@ -233,8 +235,8 @@
 					i--;
 				}
 				document.body.removeChild( widget );
-				document.body.onkeyup = function(){}
-			}
+				document.body.onkeyup = function(){};
+			};
 			// esc key handler
 			document.body.onkeyup = function( event ) {
 				if (window.event) {
@@ -247,7 +249,7 @@
 				} else {
 					return true;
 				}
-			}
+			};
 			close.onclick = to_close;
 			parentContainer.onclick = to_close;
 			form.appendChild( close );
@@ -267,7 +269,7 @@
 			var badIE = createElement( '<div class="box">' + locales.old_browser[lang] + '</div>' );
 			container.appendChild( badIE );
 		}
-	}
+	};
 
 	// pop up handler
 	function popitup(url) {
@@ -292,6 +294,6 @@
 										 "fr" : 'Fermer' },
 					"podname"		: { "en" : 'Pod Address:',
 										 "fr" : 'Adresse du Pod :' }
-				  }
+				  };
 }) ();
 
