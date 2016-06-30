@@ -41,6 +41,11 @@ You can activate a [CDN](https://en.wikipedia.org/wiki/Content_delivery_network)
 
 ## Changelog
 
+### 1.0.0
+    - Removing the protol handling for a better copy/paste action
+    - Diaspora website updated
+    - Moved to stable (3 years after!)
+
 ### 0.3.6
     img button and data uri replaced by a new one, widget path handling (full, relative, htts), title added to the lightbox, about Diaspora displayed directly (not a toggle function anymore)
 
