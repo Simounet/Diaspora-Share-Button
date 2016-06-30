@@ -202,7 +202,7 @@
 
 		form.onsubmit = function() {
 			var label = form.getElementsByTagName('label');
-			var podurl = "https://" + label[0].childNodes[2].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
+			var podurl = label[0].childNodes[1].value + "/bookmarklet?url=" + encodeURIComponent(window.location.href) + "&amp;title=" + encodeURIComponent(document.title) + "&amp;notes=" + encodeURIComponent('' + (window.getSelection ? window.getSelection() : document.getSelection ? document.getSelection() : document.selection.createRange().text)) + "&amp;v=1&amp;";
 			// TODO: check if url/bookmarklet and url/.well-known/host-meta exist
 			popitup( podurl );
 			return false;
@@ -215,10 +215,10 @@
 		// label with input and submit button
 		var labels = form.getElementsByTagName('label');
 		if (labels.length == 0) {
-			var label = createElement( '<label class="label" for="podname">' + locales.podname[lang] + ': <span>http://</span></label>' );
+			var label = createElement( '<label class="label" for="podname">' + locales.podname[lang] + '</label>' );
 			form.appendChild( label );
 
-			var podname = createElement( '<input class="podname" type="text" name="podname"></input>' );
+			var podname = createElement( '<input class="podname" type="text" name="podname" placeholder="https://diasp.org"></input>' );
 			label.appendChild( podname );
 
 			// close button
@@ -290,8 +290,8 @@
 										 "fr" : 'Partager cette page sur Diaspora*'},
 					"close"		  : { "en" : 'Close',
 										 "fr" : 'Fermer' },
-					"podname"		: { "en" : 'Pod Address',
-										 "fr" : 'Adresse du Pod ' }
+					"podname"		: { "en" : 'Pod Address:',
+										 "fr" : 'Adresse du Pod :' }
 				  }
 }) ();
 

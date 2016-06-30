@@ -436,11 +436,9 @@
     text-align:    right !important;
     line-height:   30px !important;
 }
-.x-widget .label span {
-	color:            #FFF !important;
-	background-color: #a8a1a8 !important;
-}
 .x-widget .podname {
+    margin-left: 5px !important;
+    padding: 10px !important;
     text-align:     left !important;
 }
 .x-widget .close {
