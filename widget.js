@@ -121,17 +121,17 @@
 		}
 		if ( startsWith(widgetPath, '//') ) {
 			widgetPath = widgetPath.substr(2);
-			widgetPath = 'http://' + widgetPath;
+			widgetPath = window.location.protocol + '//' + widgetPath;
 		}
 
 		if ( startsWith( widgetPath, '/') ) {
-			widgetPath = 'http://' + window.location.hostname + widgetPath;
+			widgetPath = window.location.protocol + '//' + window.location.hostname + widgetPath;
 		} else if ( ! startsWith(widgetPath, 'http://') ) {
 			var path = window.location.pathname;
 			if ( ! endsWith(path, '/') ) {
 				path = dirname( path ) + '/';
 			}
-			widgetPath = 'http://' + window.location.hostname + path + widgetPath;
+			widgetPath = window.location.protocol + '//' + window.location.hostname + path + widgetPath;
 		}
 		return widgetPath;
 	}
